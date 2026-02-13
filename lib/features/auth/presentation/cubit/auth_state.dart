@@ -1,15 +1,15 @@
 part of 'auth_cubit.dart';
 
-
+@CopyWith(constructor: '_')
 class AuthState {
-  final String value;
+  final String email;
 
-  AuthState({required this.value});
+  AuthState({required this.email});
 
   AuthState._({
-    required this.value,
+    required this.email,
   });
 
   AuthState.initial() :
-    value = '';
+    email = '';
 }

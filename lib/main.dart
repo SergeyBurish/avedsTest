@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(authManager: Locator.authManager),
-      child: MaterialApp.router(routerConfig: router.config()),
+      child: MaterialApp.router(
+        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+        routerConfig: router.config(),
+      ),
     );
   }
 }

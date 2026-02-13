@@ -5,12 +5,13 @@ abstract interface class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
-  static const _baseUrl = '';
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: 'https://d5dsstfjsletfcftjn3b.apigw.yandexcloud.net',
+  ));
   
   @override
   Future<void> requestCode(String email) async {
-    final response = await _dio.get(_baseUrl);
+    final response = await _dio.post('/login', data: {'email': email});
     print('response.statusCode ${response.statusCode}');
   }
 }

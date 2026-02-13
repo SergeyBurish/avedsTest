@@ -16,15 +16,21 @@ dependencies:
   injectable: ^2.7.1+4
   dio: ^5.9.1
   dart_either: ^2.0.0
+  copy_with_extension: ^11.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   auto_route_generator: ^10.4.0
   injectable_generator: ^2.12.0
+  copy_with_extension_gen: ^11.0.0
   flutter_lints: ^6.0.0
   build_runner: ^2.11.1
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
 

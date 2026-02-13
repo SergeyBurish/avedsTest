@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:aveds_test/features/auth/presentation/auth_screen.dart';
+import 'package:aveds_test/features/auth/presentation/screen/auth_screen.dart';
 import 'package:aveds_test/features/home/presentation/home_screen.dart';
 
 part 'app_router.gr.dart';
