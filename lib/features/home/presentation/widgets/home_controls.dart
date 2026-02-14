@@ -12,6 +12,7 @@ class HomeControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthCubit authCubit = context.read<AuthCubit>();
+    final userId = context.watch<AuthCubit>().state.userId;
     return SizedBox(
       width: Dm.s328,
       child: Column(
@@ -19,12 +20,12 @@ class HomeControls extends StatelessWidget {
         children: [
           const Text('Authorised'),
           Text(
-            'User ID: ${authCubit.state.userId}',
+            'User ID: $userId',
             textAlign: TextAlign.center,
           ),
-          const AvedsButton(
+          AvedsButton(
             title: 'Refresh',
-            // onPressed: () => authCubit.onAuthPressed(),
+            onPressed: authCubit.onRefresh
           ),
           AvedsButton(
             title: 'Logout',

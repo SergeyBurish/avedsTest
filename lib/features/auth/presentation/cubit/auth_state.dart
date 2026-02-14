@@ -56,7 +56,7 @@ class AuthState {
   bool get codeRequestSuccess => status == AuthStatus.codeRequestSuccess;
   bool get codeConfirmSuccess => status == AuthStatus.codeConfirmSuccess;
   bool get getUserDataSuccess => status == AuthStatus.getUserDataSuccess;
-  bool get isError => status == AuthStatus.error;
+  bool get error => status == AuthStatus.error;
   bool get emailVerifying => 
     email.isNotEmpty && code.isNotEmpty && email == codeSendEmail;
 }

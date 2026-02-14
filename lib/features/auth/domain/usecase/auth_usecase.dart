@@ -6,6 +6,7 @@ import 'package:dart_either/dart_either.dart';
 abstract interface class AuthManager{
     Future<Either<Object, String>> requestCode(String email);
     Future<Either<Object, JwtRt>> confirmCode(String email, String code);
+    Future<Either<Object, JwtRt>> refreshCredentials(String token);
     Future<Either<Object, UserProfile>> getUserData(String jwt);
 }
 class AuthUsecase implements AuthManager{
@@ -21,6 +22,11 @@ class AuthUsecase implements AuthManager{
   @override
   Future<Either<Object, JwtRt>> confirmCode(String email, String code) async {
     return repository.confirmCode(email, code);
+  }
+
+  @override
+  Future<Either<Object, JwtRt>> refreshCredentials(String token) async {
+    return repository.refreshCredentials(token);
   }
 
   @override

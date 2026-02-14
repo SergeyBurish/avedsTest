@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 abstract interface class AuthRemoteDataSource {
   Future<Response<dynamic>> requestCode(String email);
   Future<Response<dynamic>> confirmCode(String email, String code);
+  Future<Response<dynamic>> refreshCredentials(String token);
   Future<Response<dynamic>> getUserData(String jwt);
 }
 
@@ -13,7 +14,9 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
   
   @override
   Future<Response<dynamic>> requestCode(String email) async {
-    final response = await _dio.post('/login', data: {'email': email});
+    final response = await _dio.post('/login', data: {
+      'email': email
+    });
     return response;
   }
 
@@ -22,6 +25,14 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
     final response = await _dio.post('/confirm_code', data: {
       'email': email,
       'code': code,
+    });
+    return response;
+  }
+
+  @override
+  Future<Response<dynamic>> refreshCredentials(String token) async {
+    final response = await _dio.post('/refresh_token', data: {
+      'token': token,
     });
     return response;
   }

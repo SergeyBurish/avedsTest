@@ -12,7 +12,7 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthManager authManager;
   AuthCubit({required this.authManager}) : super(AuthState.initial());
 
-  void onAuthPressed() async {
+  void onAuthPressed() {
     if (state.emailVerifying) {
       _confirmCode();
     } else {
@@ -20,7 +20,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void _getCode() async {
+  Future<void> onRefresh() async {
+    emit(state.copyWith(
+      status: AuthStatus.inProgress,
+      userId: '',
+    ));
+    final bool success = await _getUserData(returnLeftResult: true);
+    if (!success) {
+      _refreshCredentials();
+    }
+  }
+
+  Future<void> _getCode() async {
     emit(state.copyWith.status(AuthStatus.inProgress));
 
     if (!EmailValidator.validate(state.email)) {
@@ -50,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void _confirmCode() async {
+  Future<void> _confirmCode() async {
     emit(state.copyWith.status(AuthStatus.inProgress));
 
     final result = await authManager.confirmCode(state.email, state.code);
@@ -73,9 +84,37 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void _getUserData () async {
+  Future<void> _refreshCredentials() async {
+    emit(state.copyWith.status(AuthStatus.inProgress));
+
+    final result = await authManager.refreshCredentials(state.refreshToken);
+
+    result.fold(
+      ifLeft: (Object failure) {
+        emit(state.copyWith(
+          status: AuthStatus.error,
+          message: 'Fail to refresh credentials',
+        ));
+      },
+      ifRight: (JwtRt jwtRt) {
+        emit(state.copyWith(
+          status: AuthStatus.codeConfirmSuccess,
+          jwt: jwtRt.jwt,
+          refreshToken: jwtRt.refreshToken,
+        ));
+        _getUserData();
+      }
+    );
+  }
+
+  Future<bool> _getUserData ({bool returnLeftResult = false}) async {
     emit(state.copyWith.status(AuthStatus.inProgress));
     final result = await authManager.getUserData(state.jwt);
+
+    if (returnLeftResult && result.isLeft) {
+      return false;
+    }
+    
     result.fold(
       ifLeft: (Object failure) {
         emit(state.copyWith(
@@ -91,6 +130,7 @@ class AuthCubit extends Cubit<AuthState> {
         ));
       }
     );
+    return true;
   }
 
   void onEmailChanged(String email) => 

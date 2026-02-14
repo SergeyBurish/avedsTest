@@ -41,6 +41,20 @@ class AuthRepositoryImp implements AuthRepository {
   }
 
   @override
+  Future<Either<Object, JwtRt>> refreshCredentials(String token) async {
+    try {
+      final Response<dynamic> response = await remoteDataSource.refreshCredentials(token);
+      if (_success(response)) {
+        final JwtRtDto jwtRt = JwtRtDto.fromJson(response.data);
+        return Right(jwtRt);
+      }
+      return Left('error statusCode $response.statusCode');
+    } catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
   Future<Either<Object, UserProfile>> getUserData(String jwt) async {
     try {
       final Response<dynamic> response = await remoteDataSource.getUserData(jwt);

@@ -36,14 +36,14 @@ class AuthScreen extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.isError) {
+        if (state.error) {
           _showErrorDialog(context, state.message);
         }
         if (state.codeRequestSuccess) {
           _showSnackBar(context, state.message);
         }
         if (state.codeConfirmSuccess) {
-          context.router.navigate(const HomeRoute());
+          context.router.replace(const HomeRoute());
         }
       },
       child: Scaffold(
