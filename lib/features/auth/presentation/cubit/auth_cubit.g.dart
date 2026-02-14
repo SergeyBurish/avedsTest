@@ -19,6 +19,8 @@ abstract class _$AuthStateCWProxy {
 
   AuthState refreshToken(String refreshToken);
 
+  AuthState userId(String userId);
+
   AuthState message(String message);
 
   /// Creates a new instance with the provided field values.
@@ -35,6 +37,7 @@ abstract class _$AuthStateCWProxy {
     String codeSendEmail,
     String jwt,
     String refreshToken,
+    String userId,
     String message,
   });
 }
@@ -67,6 +70,9 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
       call(refreshToken: refreshToken);
 
   @override
+  AuthState userId(String userId) => call(userId: userId);
+
+  @override
   AuthState message(String message) => call(message: message);
 
   @override
@@ -84,6 +90,7 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
     Object? codeSendEmail = const $CopyWithPlaceholder(),
     Object? jwt = const $CopyWithPlaceholder(),
     Object? refreshToken = const $CopyWithPlaceholder(),
+    Object? userId = const $CopyWithPlaceholder(),
     Object? message = const $CopyWithPlaceholder(),
   }) {
     return AuthState._(
@@ -113,6 +120,10 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
           ? _value.refreshToken
           // ignore: cast_nullable_to_non_nullable
           : refreshToken as String,
+      userId: userId == const $CopyWithPlaceholder() || userId == null
+          ? _value.userId
+          // ignore: cast_nullable_to_non_nullable
+          : userId as String,
       message: message == const $CopyWithPlaceholder() || message == null
           ? _value.message
           // ignore: cast_nullable_to_non_nullable

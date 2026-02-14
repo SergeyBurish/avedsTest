@@ -1,6 +1,8 @@
 import 'package:aveds_test/features/auth/data/data_sources/remote_data_source.dart';
 import 'package:aveds_test/features/auth/data/dto/jwt_rt_dto.dart';
+import 'package:aveds_test/features/auth/data/dto/user_profile_dto.dart';
 import 'package:aveds_test/features/auth/domain/entity/jwt_rt.dart';
+import 'package:aveds_test/features/auth/domain/entity/user_profile.dart';
 import 'package:aveds_test/features/auth/domain/repository/auth_repository.dart';
 import 'package:dart_either/dart_either.dart';
 import 'package:dio/dio.dart';
@@ -31,6 +33,20 @@ class AuthRepositoryImp implements AuthRepository {
       if (_success(response)) {
         final JwtRtDto jwtRt = JwtRtDto.fromJson(response.data);
         return Right(jwtRt);
+      }
+      return Left('error statusCode $response.statusCode');
+    } catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<Object, UserProfile>> getUserData(String jwt) async {
+    try {
+      final Response<dynamic> response = await remoteDataSource.getUserData(jwt);
+      if (_success(response)) {
+        final UserProfileDto userProfile = UserProfileDto.fromJson(response.data);
+        return Right(userProfile);
       }
       return Left('error statusCode $response.statusCode');
     } catch (e) {

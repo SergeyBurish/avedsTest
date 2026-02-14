@@ -1,4 +1,5 @@
 import 'package:aveds_test/features/auth/domain/entity/jwt_rt.dart';
+import 'package:aveds_test/features/auth/domain/entity/user_profile.dart';
 import 'package:aveds_test/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:email_validator/email_validator.dart';
@@ -72,7 +73,24 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void _getUserData () {
+  void _getUserData () async {
+    emit(state.copyWith.status(AuthStatus.inProgress));
+    final result = await authManager.getUserData(state.jwt);
+    result.fold(
+      ifLeft: (Object failure) {
+        emit(state.copyWith(
+          status: AuthStatus.error,
+          message: 'Fail to get user data',
+        ));
+      },
+      ifRight: (UserProfile userProfile) {
+        emit(state.copyWith(
+          status: AuthStatus.getUserDataSuccess,
+          userId: userProfile.userId,
+          message: 'User data fetched successfully',
+        ));
+      }
+    );
   }
 
   void onEmailChanged(String email) => 
@@ -80,4 +98,12 @@ class AuthCubit extends Cubit<AuthState> {
 
   void onCodeChanged(String code) => 
     emit(state.copyWith.code(code));
+
+  void logout() => emit(state.copyWith(
+    status: AuthStatus.idle,
+    jwt: '',
+    refreshToken: '',
+    userId: '',
+    message: '',
+  ));
 }

@@ -30,7 +30,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
   Future<Response<dynamic>> getUserData(String jwt) async {
     final response = await _dio.get('/auth', options: Options(
       headers: {
-        'Authorization': 'Bearer $jwt',
+        'Auth': 'Bearer $jwt',
       },
     ),);
     return response;

@@ -5,6 +5,7 @@ enum AuthStatus {
   inProgress,
   codeRequestSuccess,
   codeConfirmSuccess,
+  getUserDataSuccess,
   error,
 }
 
@@ -16,6 +17,7 @@ class AuthState {
   final String codeSendEmail;
   final String jwt;
   final String refreshToken;
+  final String userId;
   final String message;
 
   AuthState({
@@ -25,6 +27,7 @@ class AuthState {
     required this.codeSendEmail,
     required this.jwt,
     required this.refreshToken,
+    required this.userId,
     required this.message,
   });
 
@@ -35,6 +38,7 @@ class AuthState {
     required this.codeSendEmail,
     required this.jwt,
     required this.refreshToken,
+    required this.userId,
     required this.message,
   });
 
@@ -45,11 +49,13 @@ class AuthState {
     codeSendEmail = '',
     jwt = '',
     refreshToken = '',
+    userId = '',
     message = '';
 
   bool get inProgress => status == AuthStatus.inProgress;
   bool get codeRequestSuccess => status == AuthStatus.codeRequestSuccess;
   bool get codeConfirmSuccess => status == AuthStatus.codeConfirmSuccess;
+  bool get getUserDataSuccess => status == AuthStatus.getUserDataSuccess;
   bool get isError => status == AuthStatus.error;
   bool get emailVerifying => 
     email.isNotEmpty && code.isNotEmpty && email == codeSendEmail;
