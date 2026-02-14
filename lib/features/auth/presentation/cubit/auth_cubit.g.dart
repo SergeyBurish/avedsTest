@@ -15,6 +15,10 @@ abstract class _$AuthStateCWProxy {
 
   AuthState codeSendEmail(String codeSendEmail);
 
+  AuthState jwt(String jwt);
+
+  AuthState refreshToken(String refreshToken);
+
   AuthState message(String message);
 
   /// Creates a new instance with the provided field values.
@@ -29,6 +33,8 @@ abstract class _$AuthStateCWProxy {
     String email,
     String code,
     String codeSendEmail,
+    String jwt,
+    String refreshToken,
     String message,
   });
 }
@@ -54,6 +60,13 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
       call(codeSendEmail: codeSendEmail);
 
   @override
+  AuthState jwt(String jwt) => call(jwt: jwt);
+
+  @override
+  AuthState refreshToken(String refreshToken) =>
+      call(refreshToken: refreshToken);
+
+  @override
   AuthState message(String message) => call(message: message);
 
   @override
@@ -69,6 +82,8 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
     Object? email = const $CopyWithPlaceholder(),
     Object? code = const $CopyWithPlaceholder(),
     Object? codeSendEmail = const $CopyWithPlaceholder(),
+    Object? jwt = const $CopyWithPlaceholder(),
+    Object? refreshToken = const $CopyWithPlaceholder(),
     Object? message = const $CopyWithPlaceholder(),
   }) {
     return AuthState._(
@@ -89,6 +104,15 @@ class _$AuthStateCWProxyImpl implements _$AuthStateCWProxy {
           ? _value.codeSendEmail
           // ignore: cast_nullable_to_non_nullable
           : codeSendEmail as String,
+      jwt: jwt == const $CopyWithPlaceholder() || jwt == null
+          ? _value.jwt
+          // ignore: cast_nullable_to_non_nullable
+          : jwt as String,
+      refreshToken:
+          refreshToken == const $CopyWithPlaceholder() || refreshToken == null
+          ? _value.refreshToken
+          // ignore: cast_nullable_to_non_nullable
+          : refreshToken as String,
       message: message == const $CopyWithPlaceholder() || message == null
           ? _value.message
           // ignore: cast_nullable_to_non_nullable

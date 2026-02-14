@@ -5,12 +5,14 @@ import 'package:aveds_test/features/auth/presentation/widgets/auth_controls.dart
 import 'package:flutter/material.dart';
 
 class AuthView extends StatelessWidget {
-  const AuthView({super.key});
+  final bool loading;
+  const AuthView({super.key, required this.loading});
 
   @override
   Widget build(BuildContext context) {
-    return const AvedsView(
-      child: Column(
+    return AvedsView(
+      loading: loading,
+      child: const Column(
         children: [
           Padding(
             padding: EdgeInsets.only(left: Dm.s58, top: Dm.s184),

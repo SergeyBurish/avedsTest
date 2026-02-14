@@ -1,3 +1,4 @@
+import 'package:aveds_test/features/auth/domain/entity/jwt_rt.dart';
 import 'package:aveds_test/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:email_validator/email_validator.dart';
@@ -38,10 +39,11 @@ class AuthCubit extends Cubit<AuthState> {
           message: 'Fail to send verification code',
         ));
       },
-      ifRight: (_) {
+      ifRight: (String message) {
         emit(state.copyWith(
-          status: AuthStatus.success,
+          status: AuthStatus.codeRequestSuccess,
           codeSendEmail: state.email, // keep email verifying
+          message: message,
         ));
       }
     );
@@ -54,12 +56,23 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       ifLeft: (Object failure) {
-        print('_confirmCode ifLeft');
+        emit(state.copyWith(
+          status: AuthStatus.error,
+          message: 'Fail to confirm code',
+        ));
       },
-      ifRight: (_) {
-        print('_confirmCode ifRight');
+      ifRight: (JwtRt jwtRt) {
+        emit(state.copyWith(
+          status: AuthStatus.codeConfirmSuccess,
+          jwt: jwtRt.jwt,
+          refreshToken: jwtRt.refreshToken,
+        ));
+        _getUserData();
       }
     );
+  }
+
+  void _getUserData () {
   }
 
   void onEmailChanged(String email) => 

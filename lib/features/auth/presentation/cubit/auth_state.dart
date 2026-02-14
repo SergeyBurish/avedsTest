@@ -3,7 +3,8 @@ part of 'auth_cubit.dart';
 enum AuthStatus {
   idle,
   inProgress,
-  success,
+  codeRequestSuccess,
+  codeConfirmSuccess,
   error,
 }
 
@@ -13,6 +14,8 @@ class AuthState {
   final String email;
   final String code;
   final String codeSendEmail;
+  final String jwt;
+  final String refreshToken;
   final String message;
 
   AuthState({
@@ -20,6 +23,8 @@ class AuthState {
     required this.email,
     required this.code,
     required this.codeSendEmail,
+    required this.jwt,
+    required this.refreshToken,
     required this.message,
   });
 
@@ -28,6 +33,8 @@ class AuthState {
     required this.email,
     required this.code,
     required this.codeSendEmail,
+    required this.jwt,
+    required this.refreshToken,
     required this.message,
   });
 
@@ -36,8 +43,13 @@ class AuthState {
     email = '',
     code = '',
     codeSendEmail = '',
+    jwt = '',
+    refreshToken = '',
     message = '';
 
+  bool get inProgress => status == AuthStatus.inProgress;
+  bool get codeRequestSuccess => status == AuthStatus.codeRequestSuccess;
+  bool get codeConfirmSuccess => status == AuthStatus.codeConfirmSuccess;
   bool get isError => status == AuthStatus.error;
   bool get emailVerifying => 
     email.isNotEmpty && code.isNotEmpty && email == codeSendEmail;

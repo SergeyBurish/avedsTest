@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<int?> requestCode(String email);
-  Future<int?> confirmCode(String email, String code);
+  Future<Response<dynamic>> requestCode(String email);
+  Future<Response<dynamic>> confirmCode(String email, String code);
+  Future<Response<dynamic>> getUserData(String jwt);
 }
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
@@ -11,19 +12,27 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
   ));
   
   @override
-  Future<int?> requestCode(String email) async {
+  Future<Response<dynamic>> requestCode(String email) async {
     final response = await _dio.post('/login', data: {'email': email});
-    print('zzz requestCode response.statusCode ${response.statusCode}');
-    return response.statusCode;
+    return response;
   }
 
   @override
-  Future<int?> confirmCode(String email, String code) async {
+  Future<Response<dynamic>> confirmCode(String email, String code) async {
     final response = await _dio.post('/confirm_code', data: {
       'email': email,
       'code': code,
     });
-    print('sendCode response.statusCode ${response.statusCode}');
-    return response.statusCode;
+    return response;
+  }
+
+  @override
+  Future<Response<dynamic>> getUserData(String jwt) async {
+    final response = await _dio.get('/auth', options: Options(
+      headers: {
+        'Authorization': 'Bearer $jwt',
+      },
+    ),);
+    return response;
   }
 }
