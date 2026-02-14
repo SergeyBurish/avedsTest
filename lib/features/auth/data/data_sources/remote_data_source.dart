@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<void> requestCode(String email);
+  Future<int?> requestCode(String email);
+  Future<int?> confirmCode(String email, String code);
 }
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
@@ -10,8 +11,19 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource{
   ));
   
   @override
-  Future<void> requestCode(String email) async {
+  Future<int?> requestCode(String email) async {
     final response = await _dio.post('/login', data: {'email': email});
-    print('response.statusCode ${response.statusCode}');
+    print('zzz requestCode response.statusCode ${response.statusCode}');
+    return response.statusCode;
+  }
+
+  @override
+  Future<int?> confirmCode(String email, String code) async {
+    final response = await _dio.post('/confirm_code', data: {
+      'email': email,
+      'code': code,
+    });
+    print('sendCode response.statusCode ${response.statusCode}');
+    return response.statusCode;
   }
 }

@@ -17,6 +17,7 @@ dependencies:
   dio: ^5.9.1
   dart_either: ^2.0.0
   copy_with_extension: ^11.0.0
+  email_validator: ^3.0.0
 
 dev_dependencies:
   flutter_test:

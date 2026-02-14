@@ -10,11 +10,26 @@ class AuthRepositoryImp implements AuthRepository {
   @override
   Future<Either<Object, void>> requestCode(String email) async {
     try {
-      remoteDataSource.requestCode(email);
-      return const Right(null);
+      final int? statusCode = await remoteDataSource.requestCode(email);
+      if (statusCode != null && statusCode ~/ 100 == 2) {
+        return const Right(null);
+      }
+      return Left('error statusCode $statusCode');
     } catch (e) {
       return Left(e);
     }
   }
-  
+
+  @override
+  Future<Either<Object, void>> confirmCode(String email, String code) async {
+    try {
+      final int? statusCode = await remoteDataSource.confirmCode(email, code);
+      if (statusCode != null && statusCode ~/ 100 == 2) {
+        return const Right(null);
+      }
+      return Left('error statusCode $statusCode');
+    } catch (e) {
+      return Left(e);
+    }
+  }
 }
