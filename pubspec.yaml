@@ -19,6 +19,7 @@ dependencies:
   copy_with_extension: ^11.0.0
   email_validator: ^3.0.0
   json_annotation: ^4.9.0
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -36,4 +37,5 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - l10n/
 

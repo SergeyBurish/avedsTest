@@ -2,6 +2,7 @@ import 'package:aveds_test/core/dm.dart';
 import 'package:aveds_test/core/widgets/aveds_button.dart';
 import 'package:aveds_test/core/widgets/aveds_text_field.dart';
 import 'package:aveds_test/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ class AuthControls extends StatelessWidget {
       child: Column(
         children: [
           AvedsTextField(
-            hintText: 'Enter Email',
+            hintText: 'enter_email'.tr(),
             enabled: !emailVerifying,
             errorText: 'invalid email',
             validator: () => emailIsEmpty || isEmailValid,
