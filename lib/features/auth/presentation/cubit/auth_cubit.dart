@@ -34,14 +34,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> _getCode() async {
     emit(state.copyWith.status(AuthStatus.inProgress));
 
-    if (!EmailValidator.validate(state.email)) {
-      emit(state.copyWith(
-        status: AuthStatus.error,
-        message: "Email isn't valid",
-      ));
-      return;
-    }
-    
     final result = await authManager.requestCode(state.email);
 
     result.fold(
@@ -139,11 +131,7 @@ class AuthCubit extends Cubit<AuthState> {
   void onCodeChanged(String code) => 
     emit(state.copyWith.code(code));
 
-  void logout() => emit(state.copyWith(
-    status: AuthStatus.idle,
-    jwt: '',
-    refreshToken: '',
-    userId: '',
-    message: '',
-  ));
+  void logout() {
+    emit(AuthState.initial());
+  }
 }

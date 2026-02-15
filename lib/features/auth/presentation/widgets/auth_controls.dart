@@ -13,6 +13,8 @@ class AuthControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthCubit authCubit = context.read<AuthCubit>();
     final emailVerifying = context.watch<AuthCubit>().state.emailVerifying;
+    final emailIsEmpty = context.watch<AuthCubit>().state.emailIsEmpty;
+    final isEmailValid = context.watch<AuthCubit>().state.emailIsValid;
     return SizedBox(
       width: Dm.s328,
       child: Column(
@@ -20,6 +22,8 @@ class AuthControls extends StatelessWidget {
           AvedsTextField(
             hintText: 'Enter Email',
             enabled: !emailVerifying,
+            errorText: 'invalid email',
+            validator: () => emailIsEmpty || isEmailValid,
             onChanged: (email) => authCubit.onEmailChanged(email),
           ),
           const SizedBox(height: Dm.s11),
@@ -31,7 +35,9 @@ class AuthControls extends StatelessWidget {
           const SizedBox(height: Dm.s46),
           AvedsButton(
             title: emailVerifying ? 'Login' : 'Get Code',
-            onPressed: () => authCubit.onAuthPressed(),
+            onPressed: isEmailValid || emailVerifying 
+              ? () => authCubit.onAuthPressed()
+              : null,
           ),
         ],
       ),
