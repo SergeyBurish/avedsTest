@@ -1,0 +1,14 @@
+{
+  "enter_email": "Enter Email",
+  "enter_code": "Enter Code",
+  "login": "Login",
+  "logout": "Logout",
+  "get_code": "Get Code",
+  "authorised": "Authorised",
+  "user_id":"User ID: {}",
+  "refresh": "Refresh",
+
+  "@_____________________ERRORS_____________________": {},
+  "error": "Error",
+  "invalid_email": "invalid email"
+}
