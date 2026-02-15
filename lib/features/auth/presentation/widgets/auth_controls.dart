@@ -23,19 +23,19 @@ class AuthControls extends StatelessWidget {
           AvedsTextField(
             hintText: 'enter_email'.tr(),
             enabled: !emailVerifying,
-            errorText: 'invalid email',
+            errorText: 'invalid_email'.tr(),
             validator: () => emailIsEmpty || isEmailValid,
             onChanged: (email) => authCubit.onEmailChanged(email),
           ),
           const SizedBox(height: Dm.s11),
           AvedsTextField(
-            hintText: 'Enter Code',
+            hintText: 'enter_code'.tr(),
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: (code) => authCubit.onCodeChanged(code),
           ),
           const SizedBox(height: Dm.s46),
           AvedsButton(
-            title: emailVerifying ? 'Login' : 'Get Code',
+            title: emailVerifying ? 'login'.tr() : 'get_code'.tr(),
             onPressed: isEmailValid || emailVerifying 
               ? () => authCubit.onAuthPressed()
               : null,

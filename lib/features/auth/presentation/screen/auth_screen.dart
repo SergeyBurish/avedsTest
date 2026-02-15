@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:aveds_test/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:aveds_test/features/auth/presentation/screen/auth_view.dart';
 import 'package:aveds_test/router/app_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +14,7 @@ class AuthScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
+        title: Text('error'.tr()),
         content: Text(message),
         actions: [
           TextButton(
