@@ -2,6 +2,7 @@ import 'package:aveds_test/core/dm.dart';
 import 'package:aveds_test/core/widgets/aveds_button.dart';
 import 'package:aveds_test/core/widgets/aveds_text_field.dart';
 import 'package:aveds_test/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,25 +14,31 @@ class AuthControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthCubit authCubit = context.read<AuthCubit>();
     final emailVerifying = context.watch<AuthCubit>().state.emailVerifying;
+    final emailIsEmpty = context.watch<AuthCubit>().state.emailIsEmpty;
+    final isEmailValid = context.watch<AuthCubit>().state.emailIsValid;
     return SizedBox(
       width: Dm.s328,
       child: Column(
         children: [
           AvedsTextField(
-            hintText: 'Enter Email',
+            hintText: 'enter_email'.tr(),
             enabled: !emailVerifying,
+            errorText: 'invalid_email'.tr(),
+            validator: () => emailIsEmpty || isEmailValid,
             onChanged: (email) => authCubit.onEmailChanged(email),
           ),
           const SizedBox(height: Dm.s11),
           AvedsTextField(
-            hintText: 'Enter Code',
+            hintText: 'enter_code'.tr(),
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: (code) => authCubit.onCodeChanged(code),
           ),
           const SizedBox(height: Dm.s46),
           AvedsButton(
-            title: emailVerifying ? 'Login' : 'Get Code',
-            onPressed: () => authCubit.onAuthPressed(),
+            title: emailVerifying ? 'login'.tr() : 'get_code'.tr(),
+            onPressed: isEmailValid || emailVerifying 
+              ? () => authCubit.onAuthPressed()
+              : null,
           ),
         ],
       ),
