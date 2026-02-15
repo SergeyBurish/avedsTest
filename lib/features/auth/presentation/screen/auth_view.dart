@@ -12,17 +12,19 @@ class AuthView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AvedsView(
       loading: loading,
-      child: const Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: Dm.s58, top: Dm.s184),
-            child: AvedsImage('mini_shop.png'),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: Dm.s26, top: Dm.s51),
-            child: AuthControls(),
-          ),
-        ],
+      child: const SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: Dm.s58, top: Dm.s184),
+              child: AvedsImage('mini_shop.png'),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: Dm.s26, top: Dm.s51),
+              child: AuthControls(),
+            ),
+          ],
+        ),
       ),
     );
   }
